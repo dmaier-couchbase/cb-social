@@ -6,13 +6,24 @@ A social network example which uses Couchbase as the data store
 
 As an user of this service/application I want to be able to:
 
-* Register with a user name and password
-* Login with a user name and password
+* Register with your email address and password
+* Login with an email address and password
 * Post public messages
 * Search for friends those are also using the application/service
 * Add another user as a friend
 * See all the messages those were posted by my friends
 
 ## Data Model
+```
+user::$email :
 
-TODO: Not yet implemented
+{
+  'email' : '$email',
+  'first_name' : '$firstName',
+  'last_name' : '$lastName',
+  'avatar' : $avatar
+}
+
+
+
+```

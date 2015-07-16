@@ -61,7 +61,7 @@ msg::direct::$email::$count :
 
 * Msg Ref
 ```
-msg::ref::$from::$to :
+msg::direct::ref::$from::$to :
 {
   'messages' : [...]
 }

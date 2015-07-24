@@ -115,6 +115,27 @@ The services behave the following way:
 * POST: If no error occoured then the object '{"success" : true }' is returned.
 * Error: If an error occured then the result will have an error attribute which contains the the higher level error message as the value, e.g.: '{"error":"Authentication error"}' 
 
+The services are not working resource, but parameter based. If some mandatory parameters are missing then an error message will be returned.
+
+So instead:
+
+```
+PUT /service/users/$uid
+
+{
+  'email' : 'david.maier@couchbase.com',
+  'password' 'test',
+  'first_name' : 'David',
+  'last_name' : 'Maier',
+}
+```
+
+the parameters are passed directly:
+
+```
+POST /service/users/update?email=$email&password=$pwd&first_name=$firstName&last_name=$lastName
+```
+
 ### Users
 
 * Create an User

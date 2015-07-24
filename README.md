@@ -107,14 +107,16 @@ msg::direct::ref::$to :
 }
 ```
 
-## Service
+## Services
+
+### Users
 
 * Create an User
 
 The registration of a user is possible without any authentication.
 
 ```
-POST /users/create?email=$email&password=$pwd&first_name=$firstName&last_name=$lastName[&avatar=$avatar]
+POST /service/users/create?email=$email&password=$pwd&first_name=$firstName&last_name=$lastName[&avatar=$avatar]
 ```
 
 * Get an User
@@ -122,7 +124,7 @@ POST /users/create?email=$email&password=$pwd&first_name=$firstName&last_name=$l
 In order to get the user details of a user with a specific email address, you need to authenticate yourself.
 
 ```
-GET /users/get?email=$email&me=$me&token=$token
+GET /service/users/get?email=$email&user=$user&token=$token
 ```
 
 * Get all Users. 
@@ -130,7 +132,7 @@ GET /users/get?email=$email&me=$me&token=$token
 An authentication is required. A Primary Index on the users is required.
 
 ```
-GET /users/all?me=$me&token=$token
+GET /service/users/all?user=$user&token=$token
 ```
 
 * Find a user 
@@ -138,9 +140,25 @@ GET /users/all?me=$me&token=$token
 ... by doding a full text search on the first name or last name.
 
 ```
-GET /users/find?text=$text&me=$me&token=$token
+GET /service/users/find?text=$text&user=$user&token=$token
 ```
 
+### Sessions
 
+* Login
+
+Create session token based on the stored password.
+
+```
+POST /service/sessions/login?user=$user&secret=$secret
+```
+
+* Logout
+
+Delete the session token of a user
+
+```
+POST /service/sessions/logout?user=$user&token=$token
+```
 
 

@@ -56,6 +56,9 @@ friends::$email::confirmed::$count :
 ```
 
 * Session
+
+A session for a user which is identified by his email address is expressed as a session token.
+
 ```
 session::$email :
 {
@@ -65,6 +68,9 @@ session::$email :
 ```
 
 * Public Message
+
+Public messages of a specific user
+
 ```
 msg::public::$email::$count :
 {
@@ -75,8 +81,11 @@ msg::public::$email::$count :
 ```
 
 * Direct Message
+
+A direct message sent from a user with a specific email address. This is used to get all direct messages those were sent by me.
+
 ```
-msg::direct::$email::$count :
+msg::direct::$from::$count :
 
 {
   'titel' : '$title',
@@ -86,8 +95,11 @@ msg::direct::$email::$count :
 ```
 
 * Msg Ref
+
+The reference to find a direct message which were sent to me :
+
 ```
-msg::direct::ref::$from::$to :
+msg::direct::ref::$to :
 {
   'messages' : [...]
 }

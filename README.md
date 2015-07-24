@@ -109,6 +109,12 @@ msg::direct::ref::$to :
 
 ## Services
 
+The services behave the following way:
+
+* GET: If no error occoured then actual data is returned.
+* POST: If no error occoured then the object '{"success" : true }' is returned.
+* Error: If an error occured then the result will have an error attribute which contains the the higher level error message as the value, e.g.: '{"error":"Authentication error"}' 
+
 ### Users
 
 * Create an User
@@ -147,10 +153,10 @@ GET /service/users/find?text=$text&user=$user&token=$token
 
 * Login
 
-Create session token based on the stored password.
+Get a login by creating a session token based on the stored password.
 
 ```
-POST /service/sessions/login?user=$user&secret=$secret
+GET /service/sessions/login?user=$user&secret=$secret
 ```
 
 * Logout

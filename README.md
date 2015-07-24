@@ -120,7 +120,7 @@ The services are not working resource, but fully parameter based. If some mandat
 So instead:
 
 ```
-PUT /service/users/$uid
+PUT /service/users/$email
 
 {
   'email' : 'david.maier@couchbase.com',

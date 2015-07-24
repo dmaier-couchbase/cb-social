@@ -77,6 +77,7 @@ msg::public::$email::$count :
   'titel' : '$title',
   'msg' : '$msg',
   'is_hidden' : true|false,
+  'time' : $dateTimeAsLong
 }
 ```
 
@@ -90,13 +91,14 @@ msg::direct::$from::$count :
 {
   'titel' : '$title',
   'msg' : '$msg',
+  'time' : $dateTimeAsLong,
   'receivers' : [...]
 }
 ```
 
 * Msg Ref
 
-The reference to find a direct message which were sent to me :
+The reference to find all direct messages those were sent to me :
 
 ```
 msg::direct::ref::$to :

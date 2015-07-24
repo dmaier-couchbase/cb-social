@@ -106,3 +106,41 @@ msg::direct::ref::$to :
   'messages' : [...]
 }
 ```
+
+## Service
+
+* Create an User
+
+The registration of a user is possible without any authentication.
+
+```
+POST /users/create?email=$email&password=$pwd&first_name=$firstName&last_name=$lastName[&avatar=$avatar]
+```
+
+* Get an User
+
+In order to get the user details of a user with a specific email address, you need to authenticate yourself.
+
+```
+GET /users/get?email=$email&me=$me&token=$token
+```
+
+* Get all Users. 
+
+An authentication is required. A Primary Index on the users is required.
+
+```
+GET /users/all?me=$me&token=$token
+```
+
+* Find a user 
+
+... by doding a full text search on the first name or last name.
+
+```
+GET /users/find?text=$text&me=$me&token=$token
+```
+
+
+
+

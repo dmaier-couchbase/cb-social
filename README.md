@@ -129,7 +129,7 @@ GET /service/users/get?email=$email&user=$user&token=$token
 
 * Get all Users. 
 
-An authentication is required. A Primary Index on the users is required.
+An authentication is required. An index on the user id-s is required.
 
 ```
 GET /service/users/all?user=$user&token=$token
@@ -137,7 +137,7 @@ GET /service/users/all?user=$user&token=$token
 
 * Find a user 
 
-... by doding a full text search on the first name or last name.
+... by doding a search on the first name or last name. An index on the first name and last name is required in order to perform LIKE searches.
 
 ```
 GET /service/users/find?text=$text&user=$user&token=$token

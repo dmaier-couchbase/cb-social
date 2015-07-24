@@ -39,8 +39,9 @@ There are two kinds of friend relations. Confirmed and pending. A relation is pe
 2. Perform a multi-get to get all confirmed friend lists
 3. For each list parse the list
 4. Iterate over the list, if the last entry for a user starts with '#a' then this is a friend. Otherwise it was a past friend and it needs to be skipped.
+5. Get the user with the corresponding user id
 
-One friend list contains up to 100 entries.
+One friend list contains up to 1000 entries.
 
 ```
 friends::$email::pending :

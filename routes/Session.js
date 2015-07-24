@@ -5,11 +5,6 @@ var error = require('../error.js');
 var cb = require('../cb.js');
 var session = require('../session.js');
 
-//This provides everytime a token
-var ADMIN_USER = 'admin';
-var ADMIN_PWD = 'socialized';
-
-
 //The router to use
 var router = express.Router();
 
@@ -28,11 +23,11 @@ router.get('/', function(req, res) {
 
 
 /**
- * GET /token?user=$user&secret=$secret
+ * GET /login?user=$user&secret=$secret
  *
- * Get a token based on a user name and a secret
+ * Perform a login and get a token based on a user name and a secret
  */
-router.get('/token', function(req, res) {
+router.get('/login', function(req, res) {
    
     
     var user = req.query.user;
@@ -41,14 +36,6 @@ router.get('/token', function(req, res) {
     if (helper.isDefined(user) && helper.isDefined(secret))
     {
         var token = session.generateToken();
-        
-        //Return a token for user admin - only for testing
-        if (user == ADMIN_USER && secret == ADMIN_PWD )
-        {
-            var result = { 'user' : ADMIN_USER, 'token' : token };
-            res.json(result);
-        }
-        
         var key = "user::" + user;
         
         //Get the user
@@ -100,5 +87,70 @@ router.get('/token', function(req, res) {
         res.json(emsg);
     }
 });
+
+/**
+ * GET /logout?user=$user&token=$token
+ *
+ * Perform a logout. A token based authentication is required
+ * to perform this operation.
+ */
+router.get('/logout', function(req, res) {
+    
+    var user = req.query.user;
+    var token = req.query.token;
+    
+    if (helper.isDefined(user) && helper.isDefined(token))
+    {
+    
+        session.tokenAuth(user, token)
+                .then(function(result){
+
+                    var authenticated = result.success;
+                
+                    if ( authenticated ) {
+                    
+                        var key = "session::" + user; 
+
+                        //Delete the session
+                        bucket.remove(key, function(err, cbres) {
+
+                            if (err) {
+
+                                var emsg = error.couldNotRemove();
+                                console.log(JSON.stringify(emsg));
+                                console.log(JSON.stringify(err));
+                                res.json(emsg);
+
+                            }
+                            else
+                            {
+                                console.log("Removed " + key);
+                                res.json({ 'success' : true });
+                            }
+
+                        });      
+                        
+                    }
+                    else
+                    {
+                        var emsg = error.authError();
+                        console.log(JSON.stringify(emsg));
+                        res.json(emsg);
+                    }
+                })
+                .catch(function(error) {
+
+                    res.json(error);
+
+                });
+    }
+    else
+    {
+        var emsg = error.paramMissing();
+        console.log(JSON.stringify(emsg)); 
+        res.json(emsg);
+    }
+});
+
 
 module.exports = router;

@@ -8,7 +8,7 @@ var error = require('./error.js');
 var bucket = cb.bucket()
 
 /**
- * A function to connect to Couchbase
+ * Generate a session token
  */
 function _generateToken()
 {
@@ -16,7 +16,7 @@ function _generateToken()
 }
 
 /**
- * Perform an authentication based on the user name and a token
+ * Perform an authentication based on the user id and a token
  */ 
 function _tokenAuth(user, token)
 {

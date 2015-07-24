@@ -79,19 +79,21 @@ router.post('/create', function(req, res) {
 });
 
 /**
- * GET /get?email=$email&token=$token
+ * GET /get?email=$email&user=$user&token=$token
  * 
- * Get a user by his email address. An authentication token is required in order to access this information.
+ * Get an user by his email address. 
+ * An authentication token is required in order to access this information.
  */
 router.get('/get', function(req, res) {
    
     //Mandatory parameters
     var email = req.query.email;
+    var user = req.query.user;
     var token = req.query.token;
     
-    if (helper.isDefined(email) && helper.isDefined(token))
+    if (helper.isDefined(email) && helper.isDefined(token) && helper.isDefined(user))
     {
-         session.tokenAuth(email, token)
+         session.tokenAuth(user, token)
             .then(function(result){
  
                 var authenticated = result.success;

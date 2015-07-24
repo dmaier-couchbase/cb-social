@@ -115,7 +115,7 @@ The services behave the following way:
 * POST: If no error occoured then the object '{"success" : true }' is returned.
 * Error: If an error occured then the result will have an error attribute which contains the the higher level error message as the value, e.g.: '{"error":"Authentication error"}' 
 
-The services are not working resource, but parameter based. If some mandatory parameters are missing then an error message will be returned.
+The services are not working resource, but fully parameter based. If some mandatory parameters are missing then an error message will be returned. Side note: This is not 100% alligned with the RESTFul approach which is resource based whereby the id of the resource is typically a part of the URL.
 
 So instead:
 

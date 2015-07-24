@@ -59,6 +59,7 @@ friends::$email::confirmed::$count :
 ```
 session::$email :
 {
+  'user' : $email,
   'token' : '$token'
 }
 ```

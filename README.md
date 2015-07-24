@@ -35,9 +35,10 @@ user::$email :
 
 There are two kinds of friend relations. Confirmed and pending. A relation is pending until accepted by the requested user. The pending list is a quite short list and so it is relized as a JSON array. The confirmed friend list is an append only String list because it may become quite big. '#a' means that an entry was added to the list.  '#d' means that an entry was deleted from the list. Multiple lists need to be maintained because a user can have thousands of friends. So in order to get all friends of a user the following steps need to be peformed:
 
-1. Perform a multi-get to get all confirmed friend lists
-2. For each list parse the list
-3. Iterate over the list, if the last id for a user starts with '#a' then this is a friend. Otherwise it was a past friend.
+1. Get the number of lists 
+2. Perform a multi-get to get all confirmed friend lists
+3. For each list parse the list
+4. Iterate over the list, if the last entry for a user starts with '#a' then this is a friend. Otherwise it was a past friend and it needs to be skipped.
 
 One friend list contains up to 100 entries.
 

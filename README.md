@@ -12,6 +12,7 @@ As an user of this service/application I want to be able to:
 * Post a direct message to another user
 * Search for friends those are also using the application/service
 * Add another user as a friend
+* A user can have a max. of 1000 friends
 * See all the messages those were posted by my friends
 
 ## Data Model

@@ -33,13 +33,13 @@ user::$email :
 
 * Friends
 
-There are two kinds of friend relations. Confirmed and pending. A relation is pending until accepted by the requested user. The pending list is a quite short list and so it is relized as a JSON array. The confirmed friend list is an append only String list because it may become quite big. '#a' means that an entry was added to the list.  '#d' means that an entry was deleted from the list. Multiple lists need to be maintained because a user can have thousands of friends. So in order to get all friends of a user the following steps need to be peformed:
+There are two kinds of friend relations. Confirmed and pending. A relation is pending until accepted by the requested user. The pending list is a quite short list and so it is relized as a JSON array. The confirmed friends list could be quite huge because one user can have thousands of friends.
 
-1. Get the number of lists 
-2. Perform a multi-get to get all confirmed friend lists
-3. For each list parse the list
-4. Iterate over the list, if the last entry for a user starts with '#a' then this is a friend. Otherwise it was a past friend and it needs to be skipped.
-5. Get the user with the corresponding user id
+1. Get the friend counter
+2. Perform a multi-get to get all confirmed friends
+3. For each friend: 
+3.1. If the friend is missing then skip it. If the friend has the status 'deleted' then skip it.
+3.2. Get the user to which the friend relation is existing
 
 One friend list contains up to 1000 entries.
 
@@ -49,9 +49,11 @@ friends::$email::pending :
     to_confirm : [...]
 }
 
-friends::$email::confirmed::$count :
+friend::$from::$count :
 {
-    a#$user1;a#user2;d#$user1;...
+    'from' : '$from',
+    'to' : '$to',
+    'status' : 'active|deleted'
 }
 ```
 
@@ -109,6 +111,33 @@ msg::direct::ref::$to :
 
 ## Services
 
+The services behave the following way:
+
+* GET: If no error occoured then actual data is returned.
+* POST: If no error occoured then the object '{"success" : true }' is returned.
+* Error: If an error occured then the result will have an error attribute which contains the the higher level error message as the value, e.g.: '{"error":"Authentication error"}' 
+
+The services are not working resource, but fully parameter based. If some mandatory parameters are missing then an error message will be returned. Side note: This is not 100% alligned with the RESTFul approach which is resource based whereby the id of the resource is typically a part of the URL.
+
+So instead:
+
+```
+PUT /service/users/$email
+
+{
+  'email' : 'david.maier@couchbase.com',
+  'password' 'test',
+  'first_name' : 'David',
+  'last_name' : 'Maier',
+}
+```
+
+the parameters are passed directly:
+
+```
+POST /service/users/update?email=$email&password=$pwd&first_name=$firstName&last_name=$lastName
+```
+
 ### Users
 
 * Create an User
@@ -147,10 +176,10 @@ GET /service/users/find?text=$text&user=$user&token=$token
 
 * Login
 
-Create session token based on the stored password.
+Get a login by creating a session token based on the stored password.
 
 ```
-POST /service/sessions/login?user=$user&secret=$secret
+GET /service/sessions/login?user=$user&secret=$secret
 ```
 
 * Logout

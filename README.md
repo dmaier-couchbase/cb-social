@@ -156,12 +156,18 @@ In order to get the user details of a user with a specific email address, you ne
 GET /service/users/get?email=$email&user=$user&token=$token
 ```
 
-* Get all Users. 
+* Get all Users
 
 An authentication is required. An index on the user id-s is required.
 
 ```
 GET /service/users/all?user=$user&token=$token
+```
+
+* Update your own User Profile
+
+```
+POST /update[?first_name=$firstName][&last_name=$lastName][&password=$pwd][&avatar=$avatar]&user=$user&token=$token
 ```
 
 * Find a user 

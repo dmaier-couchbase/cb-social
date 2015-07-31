@@ -23,7 +23,7 @@ router.get('/', function(req, res) {
 
 
 /**
- * POST /login?user=$user&secret=$secret
+ * GET /login?user=$user&secret=$secret
  *
  * Perform a login and get a token based on a user name and a secret
  */
@@ -94,7 +94,7 @@ router.get('/login', function(req, res) {
  * Perform a logout. A token based authentication is required
  * to perform this operation.
  */
-router.get('/logout', function(req, res) {
+router.post('/logout', function(req, res) {
     
     var user = req.query.user;
     var token = req.query.token;
